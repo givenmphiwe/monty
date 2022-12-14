@@ -1,31 +1,31 @@
 #include "monty.h"
-#include "lists.h"
 
 /**
- * free_all - custom memory handling function
- * @all: flag to indicate what to free
- *    */
-void free_all(int all)
+ * free_dlistint - free a dlistint_t list.
+ * @stack: pointer to the first element of the list
+ * Return: no return
+ */
+void free_dlistint(stack_t *stack)
 {
-	if (data.line)
-	{
-		free(data.line);
-		data.line = NULL;
-		free_everything(data.words);
-		data.words = NULL;
-	}
+	stack_t *aux = NULL;
+	stack_t *temp = NULL;
 
-	if (all)
+	temp = stack;
+	while (temp != NULL)
 	{
-		if (data.stack)
-		{
-			free_dlistint(data.stack);
-			data.stack = NULL;
-		}
-		if (data.fptr)
-		{
-			fclose(data.fptr);
-			data.fptr = NULL;
-		}
+		aux = temp->next;
+		free(temp);
+		temp = aux;
 	}
+	stack = NULL;
+}
+
+/**
+ * free_globalvars - free a dlistint_t list.
+ * Return: no return
+ */
+void free_globalvars(void)
+{
+	fclose(globalvar.fd);
+	free(globalvar.line_buf);
 }
